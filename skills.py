@@ -9,8 +9,9 @@ class Skill(ABC):
     """
     Базовый класс умения
     """
-    user = None
-    target = None
+    def __init__(self):
+        self.user = None
+        self.target = None
 
     @property
     @abstractmethod
@@ -32,7 +33,7 @@ class Skill(ABC):
         pass
 
     def _is_stamina_enough(self):
-        return self.user.stamina > self.stamina
+        return self.user.stamina >= self.stamina
 
     def use(self, user: BaseUnit, target: BaseUnit) -> str:
         """
@@ -47,22 +48,30 @@ class Skill(ABC):
 
 
 class FuryPunch(Skill):
-    name = ...
-    stamina = ...
-    damage = ...
+    name = 'Свирепый пинок'
+    stamina = 5
+    damage = 10
 
     def skill_effect(self):
-        # TODO логика использования скилла -> return str
-        # TODO в классе нам доступны экземпляры user и target - можно использовать любые их методы
-        # TODO именно здесь происходит уменшение стамины у игрока применяющего умение и
-        # TODO уменьшение здоровья цели.
-        # TODO результат применения возвращаем строкой
-        pass
+        """
+        Логика использования скилла -> return str
+        в классе нам доступны экземпляры user и target - можно использовать любые их методы.
+        Именно здесь происходит уменьшение стамины у игрока применяющего умение и
+        уменьшение здоровья цели.
+        Результат применения возвращаем строкой
+        """
+        self.user.stamina -= self.stamina
+        self.target.hp -= self.damage
+
+        return f'{self.user.name} использует {self.name} и наносит {self.damage} урона сопернику.'
 
 class HardShot(Skill):
-    name = ...
-    stamina = ...
-    damage = ...
+    name = 'Молот гнева'
+    stamina = 4
+    damage = 13
 
     def skill_effect(self):
-        pass
+        self.user.stamina -= self.stamina
+        self.target.hp -= self.damage
+
+        return f'{self.user.name} использует {self.name} и наносит {self.damage} урона сопернику.'
