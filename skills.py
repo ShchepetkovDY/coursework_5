@@ -32,7 +32,7 @@ class Skill(ABC):
     def skill_effect(self) -> str:
         pass
 
-    def _is_stamina_enough(self):
+    def _is_stamina_enough(self) -> bool:
         return self.user.stamina >= self.stamina
 
     def use(self, user: BaseUnit, target: BaseUnit) -> str:
@@ -52,7 +52,7 @@ class FuryPunch(Skill):
     stamina = 5
     damage = 10
 
-    def skill_effect(self):
+    def skill_effect(self) -> str:
         """
         Логика использования скилла -> return str
         в классе нам доступны экземпляры user и target - можно использовать любые их методы.
@@ -70,7 +70,7 @@ class HardShot(Skill):
     stamina = 4
     damage = 13
 
-    def skill_effect(self):
+    def skill_effect(self) -> str:
         self.user.stamina -= self.stamina
         self.target.hp -= self.damage
 
