@@ -15,17 +15,17 @@ class Skill(ABC):
 
     @property
     @abstractmethod
-    def name(self):
+    def name(self) -> str:
         pass
 
     @property
     @abstractmethod
-    def stamina(self):
+    def stamina(self) -> float:
         pass
 
     @property
     @abstractmethod
-    def damage(self):
+    def damage(self) -> float:
         pass
 
     @abstractmethod

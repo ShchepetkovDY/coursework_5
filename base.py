@@ -18,7 +18,7 @@ class Arena(metaclass=BaseSingleton):
     game_is_running = False
     battle_result = None
 
-    def start_game(self, player: BaseUnit, enemy: BaseUnit):
+    def start_game(self, player: BaseUnit, enemy: BaseUnit) -> None:
         """
         НАЧАЛО ИГРЫ -> None
         Присваиваем экземпляру класса аттрибуты "игрок" и "противник"
@@ -28,7 +28,7 @@ class Arena(metaclass=BaseSingleton):
         self.enemy = enemy
         self.game_is_running = True
 
-    def _check_players_hp(self):
+    def _check_players_hp(self) -> None | str:
         """
         ПРОВЕРКА ЗДОРОВЬЯ ИГРОКА И ВРАГА
         проверка здоровья игрока и врага и возвращение результата строкой:
@@ -48,7 +48,7 @@ class Arena(metaclass=BaseSingleton):
 
         return self._end_game()
 
-    def _stamina_regeneration(self):
+    def _stamina_regeneration(self) -> None:
         """
         Регенерация здоровья и стамины для игрока и врага за ход.
         В этом методе к количеству стамины игрока и врага прибавляется константное значение.
@@ -62,7 +62,7 @@ class Arena(metaclass=BaseSingleton):
             else:
                 unit.stamina += self.STAMINA_PER_ROUND
 
-    def next_turn(self):
+    def next_turn(self) -> float | str:
         """
         СЛЕДУЮЩИЙ ХОД -> return result | return self.enemy.hit(self.player).
         Срабатывает, когда игрок пропускает ход или когда игрок наносит удар.
@@ -79,7 +79,7 @@ class Arena(metaclass=BaseSingleton):
             self._stamina_regeneration()
             return self.enemy.hit(self.player)
 
-    def _end_game(self):
+    def _end_game(self) -> str:
         """
         КНОПКА ЗАВЕРШЕНИЕ ИГРЫ - > return result: str.
         Очищаем синглтон - self._instances = {},
@@ -90,7 +90,7 @@ class Arena(metaclass=BaseSingleton):
         self.game_is_running = False
         return self.battle_result
 
-    def player_hit(self):
+    def player_hit(self) -> str:
         """
         КНОПКА УДАР ИГРОКА -> return result: str.
         Получаем результат от функции self.player.hit,
@@ -101,7 +101,7 @@ class Arena(metaclass=BaseSingleton):
         turn_result = self.next_turn()
         return f"{result}<br>{turn_result}"
 
-    def player_use_skill(self):
+    def player_use_skill(self) -> str:
         """
         КНОПКА ИГРОК ИСПОЛЬЗУЕТ УМЕНИЕ.
         Получаем результат от функции self.use_skill.
